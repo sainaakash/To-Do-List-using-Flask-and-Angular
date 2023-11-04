@@ -69,5 +69,35 @@ def delete_task(task_id):
     return redirect('/')
 
 
+@app.route('/done/<int:task_id>')
+def resolve_task(task_id):
+    task = Task.query.get(task_id)
+
+    if not task:
+        return redirect('/')
+    if task.done:
+        task.done = False
+    else:
+        task.done = True
+
+    db.session.commit()
+    return redirect('/')
+
+@app.route('/update/<int:id>', methods=['GET','POST'])
+def update(id):
+    task = Task.query.get_or_404(id)
+
+    if request.method == 'POST':
+        task.content = request.form['content']
+
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue while updating that task'
+
+    else:
+        return render_template('update.html', task=task)
+
 if __name__ == '__main__':
     app.run(debug=True)
