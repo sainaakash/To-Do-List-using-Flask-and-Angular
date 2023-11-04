@@ -58,5 +58,16 @@ def add_task():
     return redirect('/')
 
 
+@app.route('/delete/<int:task_id>')
+def delete_task(task_id):
+    task = Task.query.get(task_id)
+    if not task:
+        return redirect('/')
+
+    db.session.delete(task)
+    db.session.commit()
+    return redirect('/')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
