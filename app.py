@@ -21,25 +21,6 @@ class Task(db.Model):
 
 db.create_all()
 
-"""
-@app.route('/', methods=['POST','GET'])
-def home():
-    if request.method == 'POST':
-        task_content = request.form['content']
-        new_task = Task(content=task_content)
-
-        try:
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return 'There was an error while creating the task'
-
-    else:
-        tasks = Task.query.all()
-        return render_template('index.html', tasks=tasks)
-"""
-
 @app.route('/')
 def tasks_list():
     tasks = Task.query.all()
