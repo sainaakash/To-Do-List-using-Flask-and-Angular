@@ -2,7 +2,9 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///to-do.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATION'] = True
 app.app_context().push()
 
 db = SQLAlchemy(app)
@@ -81,4 +83,4 @@ def update(id):
         return render_template('update.html', task=task)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4500)
