@@ -8,26 +8,36 @@
 
 
 <body>
-    <div class="label">
+    <div>
             <h1> TODO App...</h1>
-
-            
-            
+            <p></p>
             <form action="/task" method="post">
-                <p><input type="text" name="content"></p>
+                <input type="text" name="content">
                 <input type="submit" value="Add task">
             </form>
-            
-            <ol>
-                {% for task in tasks %}
-                    <li>
-                        {% if task.done %} <strike> {% endif %}{{ task.content }} {% if task.done %} </strike>{% endif %}
-                        <a href="/done/{{ task.id }}">Done</a>
-                        <a href="/update/{{ task.id }}">Update</a>
-                        <a href="/delete/{{ task.id }}">Delete</a>
-                    </li>
-                {% endfor %}
-            </ol>
+            <p></p>
+
+            <table class="table table-primary">
+                <thead>
+                    <th>Task</th>
+                    <th>Actions</th>
+                </thead>
+
+                <tbody>
+                    {% for task in tasks %}
+
+                    <tr>
+                        <td>{% if task.done %} <strike> {% endif %}{{ task.content }} {% if task.done %} </strike>{% endif %}</td>
+                        <td>
+                            <a href="/done/{{ task.id }}">Done</a>
+                            <a href="/update/{{ task.id }}">Update</a>
+                            <a href="/delete/{{ task.id }}">Delete</a>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 </body>
 
