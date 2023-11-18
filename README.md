@@ -1,4 +1,4 @@
-# To-Do-List-using-Flask-and-Angular
+# To-Do-List-using-Flask-and-HTML
 
 ## Software Required:
 
