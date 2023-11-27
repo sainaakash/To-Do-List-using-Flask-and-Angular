@@ -6,12 +6,22 @@
 
 {% block body %}
 
-<div class="content">
+<div class="container">
+    <p></p>
     <h1>Update Task...</h1>
     <p></p>
     <form action="/update/{{task.id}}" method="POST">
-        <input type="text" name="content" id="content" value="{{task.content}}" size="50">
-        <input type="submit" value="Update">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="date" class="form-control" name="duedate" value="{{task.duedate}}">
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control" name="content" id="content" value="{{task.content}}">
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-primary" value="Update">
+            </div>
+        </div>
     </form>
 </div>
 
