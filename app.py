@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime, date
 
 app = Flask(__name__)
 
@@ -11,10 +12,12 @@ db = SQLAlchemy(app)
 
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    duedate = db.Column(db.Date)
     content = db.Column(db.Text)
     done = db.Column(db.Boolean, default=False)
 
     def __init__(self, content):
+        self.duedate = datetime.strptime(duedate, '%Y-%m-%d')
         self.content = content
         self.done = False
         
@@ -31,11 +34,12 @@ def tasks_list():
 
 @app.route('/task', methods=['POST'])
 def add_task():
+    duedate = request.form.get('duedate')
     content = request.form['content']
-    if not content:
+    if not content and duedate:
         return 'Error'
 
-    task = Task(content)
+    task = Task(duedate,content)
     db.session.add(task)
     db.session.commit()
     return redirect('/')
