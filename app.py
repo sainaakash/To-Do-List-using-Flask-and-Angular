@@ -16,7 +16,7 @@ class Task(db.Model):
     content = db.Column(db.Text)
     done = db.Column(db.Boolean, default=False)
 
-    def __init__(self, content):
+    def __init__(self, duedate, content):
         self.duedate = datetime.strptime(duedate, '%Y-%m-%d')
         self.content = content
         self.done = False
