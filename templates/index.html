@@ -8,37 +8,57 @@
 
 
 <body>
-    <div>
-            <h1> TODO App...</h1>
+    <div class="container extra_container">
+        <div class="row">
             <p></p>
-            <form action="/task" method="post">
-                <input type="text" name="content">
-                <input type="submit" value="Add task">
-            </form>
-            <p></p>
+            <div class="col">
+                <h1> TODO App...</h1>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+    </div>
 
-            <table class="table table-primary">
-                <thead>
-                    <th>Task</th>
-                    <th>Actions</th>
-                </thead>
-
-                <tbody>
-                    {% for task in tasks %}
-
-                    <tr>
-                        <td>{% if task.done %} <strike> {% endif %}{{ task.content }} {% if task.done %} </strike>{% endif %}</td>
-                        <td>
-                            <a href="/done/{{ task.id }}">Done</a>
-                            <a href="/update/{{ task.id }}">Update</a>
-                            <a href="/delete/{{ task.id }}">Delete</a>
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-                </tbody>
-            </table>
+    <p></p>
+    <form action="/task" method="post">
+        <div class="row">
+            <div class="col-md-2">
+                <input type="date" class="form-control" placeholder="Due Date" name="duedate">
+            </div>
+            <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="Write your task here" name="content">
+            </div>
+            <div class="col-md-2">
+                <input type="submit" class="btn btn-primary" value="Add task" name="enter">
+            </div>
         </div>
+    </form>
+    <p></p>
+
+    <div class="container">
+        <div class="row p-3 border bg-light" id="thead">
+            <div class="col-md-1">Task No.</div>
+            <div class="col-md-2" id="duedate">Due Date</div>
+            <div class="col-md-5 text-center">Tasks</div>
+            <div class="col-md-4 text-center" id="action">Actions</div>
+        </div>
+    </div>
+    <div class="container">
+        {% for task in tasks %}
+        <div></div>
+        <div>
+            <div class="row gy-5" id="">    
+                <div class="col-md-1 p-3 border bg-light">{{ task.id }}</div>
+                <div class="col-md-2 p-3 border bg-light text-center">{{ task.duedate }}</div>
+                <div class="col-md-6 p-3 border bg-light">{% if task.done %} <strike> {% endif %}{{ task.content }} {% if task.done %} </strike>{% endif %}</div>
+                <div class="col-md-3 p-3 border bg-light text-center">
+                    <button class="btn btn-primary"><a href="/done/{{ task.id }}">Done</a></button>
+                    <button class="btn btn-warning"><a href="/update/{{ task.id }}">Update</a></button>
+                    <button class="btn btn-danger"><a href="/delete/{{ task.id }}">Delete</a></button>
+                </div>
+            </div>
+        </div>
+        {% endfor %} 
+    </div>
 </body>
 
 {% endblock %}
