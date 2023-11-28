@@ -75,6 +75,7 @@ def update(id):
     task = Task.query.get_or_404(id)
 
     if request.method == 'POST':
+        task.duedate = request.form['duedate']
         task.content = request.form['content']
 
         try:
