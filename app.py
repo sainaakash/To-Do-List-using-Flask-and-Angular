@@ -34,7 +34,7 @@ def tasks_list():
 
 @app.route('/task', methods=['POST'])
 def add_task():
-    duedate = request.form.get('duedate')
+    duedate = request.form['duedate']
     content = request.form['content']
     if not content and duedate:
         return 'Error'
@@ -77,12 +77,16 @@ def update(id):
     if request.method == 'POST':
         task.duedate = request.form['duedate']
         task.content = request.form['content']
-
+        
+        db.session.commit()
+        return redirect('/')
+        '''
         try:
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue while updating that task'
+        '''
 
     else:
         return render_template('update.html', task=task)
