@@ -17,7 +17,7 @@ class Task(db.Model):
     done = db.Column(db.Boolean, default=False)
 
     def __init__(self, duedate, content):
-        self.duedate = datetime.strptime(duedate, '%Y-%m-%d')
+        self.duedate = duedate
         self.content = content
         self.done = False
         
@@ -34,10 +34,11 @@ def tasks_list():
 
 @app.route('/task', methods=['POST'])
 def add_task():
-    duedate = request.form['duedate']
+    duedate = datetime.strptime(request.form['duedate'], '%Y-%m-%d').date()
     content = request.form['content']
+    
     if not content and duedate:
-        return 'Error'
+        return 'Error', 400
 
     task = Task(duedate,content)
     db.session.add(task)
@@ -75,18 +76,14 @@ def update(id):
     task = Task.query.get_or_404(id)
 
     if request.method == 'POST':
-        task.duedate = request.form['duedate']
+        task.duedate = datetime.strptime(request.form['duedate'], '%Y-%m-%d').date()
         task.content = request.form['content']
         
-        db.session.commit()
-        return redirect('/')
-        '''
         try:
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue while updating that task'
-        '''
 
     else:
         return render_template('update.html', task=task)
